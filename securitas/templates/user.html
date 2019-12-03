@@ -69,10 +69,10 @@
       <div class="col s12 l9">
 
         <div class="section">
-          <h4 class="header fw300">Groups</h4>
+          <h4 class="header fw300">{{ user.username }}'s Groups</h4>
           <ul class="collection">
-            {% for group in groups %}
-              {% with is_sponsor = user.username in group.sponsors %}
+            {% for group in groups['member'] %}
+              {% with is_sponsor = group.name in groups['managed'] %}
                 <li class="collection-item avatar">
                   <!-- TODO: .red if sponsor/admin -->
                   <i class="material-icons circle {{ 'red' if is_sponsor else 'green' }}">group</i>

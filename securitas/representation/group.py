@@ -11,10 +11,18 @@ class Group(Representation):
 
     @property
     def members(self):
+        '''
+        NOTE:
+        This won't exist (will throw!) if we call group_find with all=False
+        '''
         return self._attrlist('member_user')
 
     @property
     def sponsors(self):
+        '''
+        NOTE:
+        This won't exist (will throw!) if we call group_find with all=False
+        '''
         return self._attrlist('membermanager_user')
 
     @property

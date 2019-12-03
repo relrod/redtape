@@ -11,8 +11,17 @@ from securitas.utility import with_ipa, user_or_404
 @with_ipa(app, session)
 def user(ipa, username):
     user = User(user_or_404(ipa, username))
-    groups = [Group(g) for g in ipa.group_find(user=username)['result']]
-    return render_template('user.html', user=user, groups=groups)
+    groups_member = [Group(g) for g in ipa.group_find(user=username, all=False)['result']]
+    groups_managed = [Group(g).name for g in ipa.group_find(membermanager_user=username, all=False)['result']]
+    groups = {
+        'managed': groups_managed,
+        'member': groups_member,
+    }
+    return render_template(
+        'user.html',
+        user=user,
+        groups=groups,
+    )
 
 @app.route('/user/<username>/edit/', methods=['GET', 'POST'])
 @with_ipa(app, session)
